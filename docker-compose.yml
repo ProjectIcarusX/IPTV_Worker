@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  management:
+    image: harbor.ittim-online.com/iptv/worker_management:develop
+    restart: always
+    environment:
+      - DEVELOPMENT=${DEVELOPMENT}
+      - STREAMS_VOLUME_NAME=${STREAMS_VOLUME_NAME}
+      - MANAGEMENT_URL=${MANAGEMENT_URL}
+      - NATS_PASS=${NATS_PASS}
+    network_mode: "host"
+    volumes:
+      - streams:/opt/streams
+      - ./data:/opt/data
+      - /var/run/docker.sock:/var/run/docker.sock
+  nats:
+    image: nats
+    restart: always
+    command: -a 127.0.0.1 --user root --pass ${NATS_PASS} -m 8222
+    network_mode: "host"
+
+volumes:
+  streams:
+    external:
+      name: ${STREAMS_VOLUME_NAME}
