@@ -4,7 +4,6 @@ services:
     image: harbor.ittim-online.com/iptv/worker_management:develop
     restart: always
     environment:
-      - DEVELOPMENT=${DEVELOPMENT}
       - STREAMS_VOLUME_NAME=${STREAMS_VOLUME_NAME}
       - MANAGEMENT_URL=${MANAGEMENT_URL}
       - NATS_PASS=${NATS_PASS}
